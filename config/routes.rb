@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :records do
       get :list_with_month, on: :collection
     end
+    resources :projects, only: :index
   end
 
   namespace :admin do
@@ -16,7 +17,6 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :new, :create, :edit, :update]
     resources :admins
     resources :projects
-
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
