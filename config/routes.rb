@@ -3,6 +3,15 @@ Rails.application.routes.draw do
   namespace :api do
     post 'login' => 'sessions#create'
   end
+
+  namespace :admin do
+    root 'welcome#index'
+    get 'login' => 'sessions#new'
+    post 'login' => 'sessions#create'
+    delete 'logout' => 'sessions#destroy'
+    resources :users, only: [:index, :new, :create, :edit, :update]
+    resources :admins
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

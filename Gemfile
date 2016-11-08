@@ -52,3 +52,4 @@ end
 
 gem 'bootstrap-sass'
 gem 'simple_form'
+gem 'rails-i18n'
