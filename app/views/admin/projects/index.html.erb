@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Project.human_attribute_name(:name) %></th>
+      <th><%= Project.human_attribute_name(:desc) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><%= project.desc %></td>
+        <td><%= link_to t(:edit), edit_admin_project_path(project) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><%= t(:new) %></div>
+  <div class="panel-body">
+    <%= render 'form' %>
+  </div>
+</div>

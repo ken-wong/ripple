@@ -2,11 +2,15 @@ zh-CN:
   activerecord:
     models:
       user: 员工
+      project: 项目
     attributes:
       user: 
         nickname: 用户名
         name: 姓名
         password: 密码
+      project:
+        name: 名称
+        desc: 描述
   login: 登陆
   logout: 登出
   edit: 编辑

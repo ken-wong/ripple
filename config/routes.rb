@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  resources :projects
   resources :users
-  namespace :api do
+  namespace :api, defaults: {format: :json} do
     post 'login' => 'sessions#create'
+    resources :records do
+      get :list_with_month, on: :collection
+    end
   end
 
   namespace :admin do
@@ -11,6 +15,8 @@ Rails.application.routes.draw do
     delete 'logout' => 'sessions#destroy'
     resources :users, only: [:index, :new, :create, :edit, :update]
     resources :admins
+    resources :projects
+
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
