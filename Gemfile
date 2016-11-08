@@ -53,3 +53,4 @@ end
 gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'rails-i18n'
+gem 'rack-cors', :require => 'rack/cors'
