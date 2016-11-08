@@ -43,7 +43,8 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def record_list
-    @records = @user.records
+    @records = @user.records.order(date: :desc)
+    @dates = @records.pluck(:date).uniq
   end
 
   private

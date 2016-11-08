@@ -8,10 +8,10 @@
   </thead>
 
   <tbody>
-    <% @records.each do |record| %>
+    <% @dates.each do |date| %>
       <tr>
-        <td><%= record.date %></td>
-        <td><%= record.project.name if record.project %></td>
+        <td><%= date %></td>
+        <td><%= Project.where(id: @records.where(date: date).pluck(:project_id)).pluck(:name).join(",") %></td>
       </tr>
     <% end %>
   </tbody>
