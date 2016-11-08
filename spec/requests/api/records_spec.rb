@@ -73,5 +73,19 @@ RSpec.describe "records" do
       expect(record.project_id).to eq project.id
       expect(record.user_id).to eq user.id
     end
+
+    it "failed to add record if project_ids is empty" do
+      Record.delete_all
+      user = create(:user)
+      valid_header  = {
+        authorization: ActionController::HttpAuthentication::Token.encode_credentials("#{user.authentication_token},nickname=#{user.nickname}")
+      }
+
+      post "/api/records", {date: Date.today}, valid_header
+      expect(response).not_to be_success
+      expect(response).to have_http_status(422)
+      json = JSON.parse(response.body)
+      expect(json["message"]).to eq "项目id为空"
+    end
   end
 end

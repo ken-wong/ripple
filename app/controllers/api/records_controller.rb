@@ -28,6 +28,10 @@ class Api::RecordsController < Api::BaseController
     project_ids = []
     project_ids = params[:project_ids]
     
+    if project_ids.blank?
+      return render json: {message: "项目id为空"}, status: 422
+    end
+
     project_ids.each do |project_id|
       Record.create(
         user_id: current_user.id,
