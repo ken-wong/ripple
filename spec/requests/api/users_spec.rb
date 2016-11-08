@@ -9,7 +9,7 @@ RSpec.describe "users" do
       valid_header  = {
           authorization: ActionController::HttpAuthentication::Token.encode_credentials("#{user.authentication_token},nickname=#{user.nickname}")
         }
-      patch "/api/users/update_password", {old_password: user.password, password: "new_password"}, valid_header
+      patch "/api/users/update_password", { password: "new_password"}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(200)
       user.reload

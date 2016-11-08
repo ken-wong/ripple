@@ -17,6 +17,6 @@ curl -X POST --header "Authorization: Token token=#{token}, nickname=foo" -d "pr
 ```
 ### update password
 ```bash
-curl -X PATCH --header "Authorization: Token token=#{token}, nickname=foo" -d "old_password=111111&password=222222" http://115.28.142.45:8083/api/users/update_password
+curl -X PATCH --header "Authorization: Token token=#{token}, nickname=foo" -d "password=222222" http://115.28.142.45:8083/api/users/update_password
 重置密码的同时，token也会改变
 ```
