@@ -15,3 +15,8 @@ curl -X GET http://115.28.142.45:8083/api/projects
 ```bash
 curl -X POST --header "Authorization: Token token=#{token}, nickname=foo" -d "project_ids[]=1&project_ids[]=2&date=2016-11-01" http://115.28.142.45:8083/api/records
 ```
+### update password
+```bash
+curl -X PATCH --header "Authorization: Token token=#{token}, nickname=foo" -d "old_password=111111&password=222222" http://115.28.142.45:8083/api/users/update_password
+重置密码的同时，token也会改变
+```

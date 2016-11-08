@@ -7,6 +7,9 @@ Rails.application.routes.draw do
       get :list_with_month, on: :collection
     end
     resources :projects, only: :index
+    resources :users, only: [] do
+      patch :update_password, on: :collection
+    end
   end
 
   namespace :admin do
