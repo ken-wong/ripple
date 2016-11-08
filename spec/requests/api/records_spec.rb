@@ -16,7 +16,8 @@ RSpec.describe "records" do
       json = JSON.parse(response.body)
 
       expect(json.count).to eq 1
-      expect(json.first["id"]).to eq record.id
+      expect(json.first["date"]).to eq record.date.to_s
+      expect(json.first["projects"]).to eq [project.name]
     end
 
     it "failed to get list_with_month: wrong month" do
@@ -49,7 +50,8 @@ RSpec.describe "records" do
       json = JSON.parse(response.body)
 
       expect(json.count).to eq 1
-      expect(json.first["id"]).to eq record.id
+      expect(json.first["date"]).to eq record.date.to_s
+      expect(json.first["projects"]).to eq [project.name]
     end
   end
 end

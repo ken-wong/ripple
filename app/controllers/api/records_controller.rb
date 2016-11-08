@@ -3,7 +3,8 @@ class Api::RecordsController < Api::BaseController
   def list_with_month
     month = params[:month]
     begin_of_month = get_begin_of_month(month)
-    @records = current_user.records.where(date: begin_of_month..begin_of_month.end_of_month)
+    @records = current_user.records.where(date: begin_of_month..begin_of_month.end_of_month).order(date: :asc)
+    @dates = @records.pluck(:date)
   end
 
   private
