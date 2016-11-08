@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :record_list]
 
   # GET /users
   # GET /users.json
@@ -40,6 +40,10 @@ class Admin::UsersController < Admin::BaseController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def record_list
+    @records = @user.records
   end
 
   private

@@ -57,13 +57,14 @@ RSpec.describe "records" do
 
   describe "POST #create" do
     it "add a record" do
+      Record.delete_all
       user = create(:user)
       valid_header  = {
         authorization: ActionController::HttpAuthentication::Token.encode_credentials("#{user.authentication_token},nickname=#{user.nickname}")
       }
 
       project = create(:project)
-      post "/api/records", {project_ids: [project.id], date: Date.today}, valid_header
+      post "/api/records", {project_ids: ["#{project.id}"], date: Date.today}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(201)
       json = JSON.parse(response.body)

@@ -14,6 +14,7 @@ class Api::RecordsController < Api::BaseController
     end
     project_ids = []
     project_ids = params[:project_ids]
+    
     project_ids.each do |project_id|
       Record.create(
         user_id: current_user.id,
