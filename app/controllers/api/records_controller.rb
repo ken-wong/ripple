@@ -32,13 +32,15 @@ class Api::RecordsController < Api::BaseController
       return render json: {message: "项目id为空"}, status: 422
     end
 
-    project_ids.each do |project_id|
-      Record.create(
-        user_id: current_user.id,
-        date: date,
-        project_id: project_id)
+    message = ""
+    project_ids.split(",").each do |project_id|
+      record = Record.create(user_id: current_user.id, date: date, project_id: project_id)
+      if record.save
+      else
+        message += "#{project_id}失败"
+      end
     end
-    render json: {}, status: 201
+    render json: {message: message}, status: 201
   end
 
   private

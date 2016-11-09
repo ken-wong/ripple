@@ -64,7 +64,7 @@ RSpec.describe "records" do
       }
 
       project = create(:project)
-      post "/api/records", {project_ids: ["#{project.id}"], date: Date.today}, valid_header
+      post "/api/records", {project_ids: [project.id], date: Date.today}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(201)
       json = JSON.parse(response.body)
@@ -86,6 +86,22 @@ RSpec.describe "records" do
       expect(response).to have_http_status(422)
       json = JSON.parse(response.body)
       expect(json["message"]).to eq "项目id为空"
+    end
+
+    it "failed to add record if project_ids is hash" do
+      Record.delete_all
+      user = create(:user)
+      valid_header  = {
+        authorization: ActionController::HttpAuthentication::Token.encode_credentials("#{user.authentication_token},nickname=#{user.nickname}")
+      }
+
+      project = create(:project)
+      post "/api/records", {project_ids: {"0": project.id}, date: Date.today}, valid_header
+      expect(response).to be_success
+      expect(response).to have_http_status(201)
+      json = JSON.parse(response.body)
+      expect(Record.count).to eq 0
+      expect(json["message"]).to include("失败")
     end
   end
 end
