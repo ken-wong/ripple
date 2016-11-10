@@ -13,7 +13,7 @@ RSpec.describe "records" do
       get "/api/records/list_with_month", {month: Date.today.to_s(:month_and_year)}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)["list"]
 
       expect(json.count).to eq 1
       expect(json.first["date"]).to eq record.date.to_s
@@ -31,7 +31,7 @@ RSpec.describe "records" do
       get "/api/records/list_with_month", {month: Date.today.to_s(:month_and_year).succ}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)["list"]
 
       expect(json.count).to eq 0
     end
@@ -47,7 +47,7 @@ RSpec.describe "records" do
       get "/api/records/list_with_month", {}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)["list"]
 
       expect(json.count).to eq 1
       expect(json.first["date"]).to eq record.date.to_s
