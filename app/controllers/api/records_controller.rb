@@ -10,11 +10,11 @@ class Api::RecordsController < Api::BaseController
     begin
       date = Date.parse(params[:date]) 
     rescue 
-      render json: {message: "日期非法"}, status: 422
+      return render json: {message: "日期非法"}, status: 422
     end
 
     if date < Date.today && Record.find_by(date: date, user_id: current_user.id)
-      render json: {message: "不能变更"}, status: 422
+      return render json: {message: "不能变更"}, status: 422
     end
 
     if date == Date.today
@@ -22,7 +22,7 @@ class Api::RecordsController < Api::BaseController
     end
 
     if date > Date.today
-      render json: {message: "日期错误：不能填写未来日期"}, status: 422
+      return render json: {message: "日期错误：不能填写未来日期"}, status: 422
     end
 
     project_ids = []
