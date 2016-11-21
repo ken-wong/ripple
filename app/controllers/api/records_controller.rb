@@ -34,10 +34,12 @@ class Api::RecordsController < Api::BaseController
 
     message = ""
     project_ids.split(",").each do |project_id|
-      record = Record.create(user_id: current_user.id, date: date, project_id: project_id)
-      if record.save
-      else
-        message += "#{project_id}失败"
+      if Project.find_by(id: project_id)
+        record = Record.new(user_id: current_user.id, date: date, project_id: project_id)
+        if record.save
+        else
+          message += "#{project_id}失败"
+        end
       end
     end
     render json: {message: message}, status: 201
