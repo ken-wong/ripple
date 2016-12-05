@@ -10,7 +10,7 @@ class Admin::AdminsController < Admin::BaseController
 
   def update
     @admin = Admin.find(params[:id])
-    @admin.update(name: params[:admin][:name])
+    @admin.update(name: params[:admin][:name], password: params[:admin][:password])
     redirect_to admin_admins_path
   end
 end
