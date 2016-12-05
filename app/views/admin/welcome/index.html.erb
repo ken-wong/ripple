@@ -8,7 +8,7 @@
   <tr>
     <th></th>
     <% (@day.beginning_of_month..@day.end_of_month).each do |date| %>
-      <th class="text-center" style="color:<%= "red" if (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) %>">
+      <th class="text-center" style="background:<%= "#A8A8A8" if (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) %>">
         <%= date.to_s(:month_and_day) %>
         <%= Admin::WEEKDAYS[date.strftime("%w").to_i] %>
       </th>
@@ -20,7 +20,7 @@
         <strong><%= user.name %></strong>
       </td>
       <% (@day.beginning_of_month..@day.end_of_month).each do |date| %>
-        <td>
+        <td class="text-center" style="background:<%= "#A8A8A8" if (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) %>">
           <%= Project.where(id: user.records.where(date: date).pluck(:project_id)).pluck(:name).join(",") %>
         </td>
       <% end %>
