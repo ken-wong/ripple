@@ -21,7 +21,9 @@ Rails.application.routes.draw do
       get :record_list, on: :member
     end
     resources :admins
-    resources :projects
+    resources :projects do
+      get :statistics, on: :member
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

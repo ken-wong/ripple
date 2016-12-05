@@ -42,6 +42,10 @@ class Admin::ProjectsController < Admin::BaseController
     end
   end
 
+  def statistics
+    @project = Project.find(params[:id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project

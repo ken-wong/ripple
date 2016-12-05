@@ -16,6 +16,7 @@
         <tr>
           <td><%= project.name %></td>
           <td><%= project.desc %></td>
+          <td><%= link_to t(:statistics), statistics_admin_project_path(project) %></td>
           <td><%= link_to t(:edit), edit_admin_project_path(project) %></td>
         </tr>
       <% end %>

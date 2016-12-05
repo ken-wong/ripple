@@ -1,0 +1,23 @@
+<h1><%= Date.today.to_s(:month_and_year) %></h1>
+<table class="table table-bordered">
+  <tr>
+    <th></th>
+    <% (Date.today.beginning_of_month..Date.today.end_of_month).each do |date| %>
+      <th>
+        <%= date.day %>
+      </th>
+    <% end %>
+  </tr>
+  <% User.all.each do |user| %>
+    <tr>
+      <td>
+        <strong><%= user.name %></strong>
+      </td>
+      <% (Date.today.beginning_of_month..Date.today.end_of_month).each do |date| %>
+        <td>
+          <%= Project.where(id: user.records.where(date: date).pluck(:project_id)).pluck(:name).join(",") %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
