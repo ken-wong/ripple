@@ -3,8 +3,9 @@
   <tr>
     <th></th>
     <% (Date.today.beginning_of_month..Date.today.end_of_month).each do |date| %>
-      <th>
-        <%= date.day %>
+      <th class="text-center" style="color:<%= "red" if (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) %>">
+        <%= date.to_s(:month_and_day) %>
+        <%= Admin::WEEKDAYS[date.strftime("%w").to_i] %>
       </th>
     <% end %>
   </tr>
