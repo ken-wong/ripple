@@ -1,1 +1,29 @@
-hello
+<%= simple_form_for @home, url: admin_root_path, method: :get do |f| %>
+  <%= f.input :date, html5: true, label: false, input_html: {value: @day} %>
+  <%= f.button :submit, '设置月份', class: "btn-danger" %>
+<% end %>
+
+<h1><%= @day.to_s(:month_and_year) %></h1>
+<table class="table table-bordered">
+  <tr>
+    <th></th>
+    <% (@day.beginning_of_month..@day.end_of_month).each do |date| %>
+      <th class="text-center" style="color:<%= "red" if (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) %>">
+        <%= date.to_s(:month_and_day) %>
+        <%= Admin::WEEKDAYS[date.strftime("%w").to_i] %>
+      </th>
+    <% end %>
+  </tr>
+  <% User.all.each do |user| %>
+    <tr>
+      <td>
+        <strong><%= user.name %></strong>
+      </td>
+      <% (Date.today.beginning_of_month..Date.today.end_of_month).each do |date| %>
+        <td>
+          <%= Project.where(id: user.records.where(date: date).pluck(:project_id)).pluck(:name).join(",") %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
