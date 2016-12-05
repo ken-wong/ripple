@@ -4,6 +4,7 @@ zh-CN:
       user: 员工
       project: 项目
       record: 记录
+      admin: 管理员
     attributes:
       user: 
         nickname: 用户名
@@ -16,6 +17,9 @@ zh-CN:
         date: 日期
         user_id: 员工
         project_id: 项目
+      admin:
+        name: 姓名
+        password: 密码
   login: 登陆
   logout: 登出
   edit: 编辑

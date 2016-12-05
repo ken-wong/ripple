@@ -22,19 +22,17 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li class="<%= 'active' if params[:controller] == 'admin/admins' %>">
+          <%= link_to Admin.model_name.human, admin_admins_path %>
+        </li>
+        <li>
+          <%= link_to t(:logout), admin_logout_path, method: :delete if admin_logged_in? %>
+        </li>
+        <li>
+          <%= link_to t(:login), admin_login_path if !admin_logged_in? %>
+        </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<%= current_admin.name if admin_logged_in? %></span><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li class="<%= 'active' if params[:controller] == 'admin/admins' %>">
-              <%= link_to Admin.model_name.human, admin_admins_path %>
-            </li>
-            <li>
-              <%= link_to t(:logout), admin_logout_path, method: :delete if admin_logged_in? %>
-            </li>
-            <li>
-              <%= link_to t(:login), admin_login_path if !admin_logged_in? %>
-            </li>
-          </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<%= current_admin.name if admin_logged_in? %></span></a>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
