@@ -15,7 +15,7 @@
         <tr>
           <td><%= user.nickname %></td>
           <td><%= user.name %></td>
-          <td><%= link_to t(:record_list), record_list_admin_user_path(user) %></td>
+          <td><%= link_to_if (user.records.count > 0), t(:record_list), record_list_admin_user_path(user) %></td>
           <td><%= link_to t(:edit), edit_admin_user_path(user) %></td>
         </tr>
       <% end %>
