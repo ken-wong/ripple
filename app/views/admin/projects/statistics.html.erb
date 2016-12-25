@@ -16,7 +16,7 @@
       </td>
       <% @project.records.order(date: :asc).pluck(:date).uniq.each do |date| %>
         <td class="text-center" style="background:<%= "#A8A8A8" if (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) %>">
-          <%= Record.find_by(user_id: user.id, project_id: @project.id, date: date) ? 8 : '' %>
+          <%= Record.find_by(user_id: user.id, project_id: @project.id, date: date).hour %>
         </td>
       <% end %>
     </tr>

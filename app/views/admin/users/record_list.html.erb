@@ -3,7 +3,6 @@
     <tr>
       <th><%= Record.human_attribute_name(:date) %></th>
       <th><%= Project.human_attribute_name(:name) %></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -11,7 +10,14 @@
     <% @dates.each do |date| %>
       <tr>
         <td><%= date %></td>
-        <td><%= Project.where(id: @records.where(date: date).pluck(:project_id)).pluck(:name).join(",") %></td>
+        <td>
+          <% @records.where(date: date).each do |record| %>
+            <p>
+              <%= record.project.name %>
+              <%= record.hour %>
+            </p>
+          <% end %>  
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -8,16 +8,18 @@ RSpec.describe "records" do
         authorization: ActionController::HttpAuthentication::Token.encode_credentials("#{user.authentication_token},nickname=#{user.nickname}")
       }
       project = create(:project)
-      record = create(:record, user_id: user.id, date: Date.today, project_id: project.id)
+      record = create(:record, user_id: user.id, date: Date.today, project_id: project.id, hour: 4, remark: "remark")
 
-      get "/api/records/list_with_month", {month: Date.today.to_s(:month_and_year)}, valid_header
+      get "/api/records/list_with_month", {month: Date.today.strftime("%Y%M")}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(200)
       json = JSON.parse(response.body)["list"]
 
       expect(json.count).to eq 1
       expect(json.first["date"]).to eq record.date.to_s
-      expect(json.first["projects"]).to eq [project.name]
+      expect(json.first["records"].first["name"]).to eq project.name
+      expect(json.first["records"].first["hour"]).to eq 4
+      expect(json.first["records"].first["remark"]).to eq "remark"
     end
 
     it "failed to get list_with_month: wrong month" do
@@ -28,7 +30,7 @@ RSpec.describe "records" do
       project = create(:project)
       record = create(:record, user_id: user.id, date: Date.today, project_id: project.id)
 
-      get "/api/records/list_with_month", {month: Date.today.to_s(:month_and_year).succ}, valid_header
+      get "/api/records/list_with_month", {month: Date.today.strftime("%Y%M").succ}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(200)
       json = JSON.parse(response.body)["list"]
@@ -51,7 +53,7 @@ RSpec.describe "records" do
 
       expect(json.count).to eq 1
       expect(json.first["date"]).to eq record.date.to_s
-      expect(json.first["projects"]).to eq [project.name]
+      expect(json.first["records"].first["name"]).to eq project.name
     end
   end
 
@@ -64,7 +66,7 @@ RSpec.describe "records" do
       }
 
       project = create(:project)
-      post "/api/records", {project_ids: [project.id], date: Date.today}, valid_header
+      post "/api/records", {records: [{project_id: project.id, hour: 6, remark: "remark"}], date: Date.today}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(201)
       json = JSON.parse(response.body)
@@ -86,22 +88,6 @@ RSpec.describe "records" do
       expect(response).to have_http_status(422)
       json = JSON.parse(response.body)
       expect(json["message"]).to eq "项目id为空"
-    end
-
-    it "failed to add record if project_ids is hash" do
-      Record.delete_all
-      user = create(:user)
-      valid_header  = {
-        authorization: ActionController::HttpAuthentication::Token.encode_credentials("#{user.authentication_token},nickname=#{user.nickname}")
-      }
-
-      project = create(:project)
-      post "/api/records", {project_ids: {"0": project.id}, date: Date.today}, valid_header
-      expect(response).to be_success
-      expect(response).to have_http_status(201)
-      json = JSON.parse(response.body)
-      expect(Record.count).to eq 0
-      expect(json["message"]).to include("失败")
     end
   end
 end

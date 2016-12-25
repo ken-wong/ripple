@@ -1,6 +1,13 @@
 json.list do
   json.array! @dates.each do |date|
     json.date date
-    json.projects Project.where(id: @records.where(date: date).pluck(:project_id)).pluck(:name)
+    @record_with_date = @records.where(date: date)
+    json.records do
+      json.array!  @record_with_date do |record|
+        json.name record.project.name
+        json.hour record.hour
+        json.remark record.remark
+      end
+    end
   end
 end
