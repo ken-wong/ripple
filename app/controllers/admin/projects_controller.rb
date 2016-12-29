@@ -22,7 +22,7 @@ class Admin::ProjectsController < Admin::BaseController
         format.html { redirect_to admin_projects_path, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
-        format.html { render :new }
+        format.html { redirect_to admin_projects_path, notice: 'Failed' }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
