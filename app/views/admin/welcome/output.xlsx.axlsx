@@ -1,0 +1,16 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  gray_style = s.add_style :bg_color => "A8A8A8"
+  wb.add_worksheet(name: "Buttons") do |sheet|
+    days = (@day.beginning_of_month..@day.end_of_month).map {|day| day.to_s(:month_and_day) + Admin::WEEKDAYS[day.strftime("%w").to_i] }
+    colors = (@day.beginning_of_month..@day.end_of_month).map {|date| (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) ? gray_style : nil }
+    sheet.add_row [""] + days , :style => [nil] + colors
+    User.all.each do |user|
+      a = []
+      (@day.beginning_of_month..@day.end_of_month).each do |date|
+        a << Project.where(id: user.records.where(date: date).pluck(:project_id)).pluck(:name).join(",")
+      end
+      sheet.add_row [user.name] + a , :style => [nil] + colors
+    end
+  end
+end

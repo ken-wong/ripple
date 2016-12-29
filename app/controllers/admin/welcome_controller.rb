@@ -4,4 +4,9 @@ class Admin::WelcomeController < Admin::BaseController
     @home = Home.new
     @day = params[:home] ? Date.parse(params[:home][:date]) : Date.today
   end
+
+  def output
+    @day = params[:home] ? Date.parse(params[:home][:date]) : Date.today
+    render xlsx: 'welcome/output'
+  end
 end
