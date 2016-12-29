@@ -66,7 +66,7 @@ RSpec.describe "records" do
       }
 
       project = create(:project)
-      post "/api/records", {records: [{project_id: project.id, hour: 6, remark: "remark"}], date: Date.today}, valid_header
+      post "/api/records", {records: {"0" => {project_id: project.id, hour: 6, remark: "remark"}}, date: Date.today}, valid_header
       expect(response).to be_success
       expect(response).to have_http_status(201)
       json = JSON.parse(response.body)
