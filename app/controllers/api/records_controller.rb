@@ -25,15 +25,15 @@ class Api::RecordsController < Api::BaseController
       return render json: {message: "日期错误：不能填写未来日期"}, status: 422
     end
 
-    records = []
+    records = {}
     records = params[:records]
     
     if records.blank?
       return render json: {message: "项目id为空"}, status: 422
     end
-
+    
     message = ""
-    records.each do |record|
+    records.each do |key, record|
       if Project.find_by(id: record["project_id"])
         record = Record.new(user_id: current_user.id, date: date, project_id: record["project_id"], hour: record["hour"], remark: record["remark"])
         if record.save
