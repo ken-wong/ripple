@@ -6,7 +6,7 @@ json.list do
       json.array!  @record_with_date do |record|
         json.name record.project.name
         json.hour record.hour
-        json.remark record.remark
+        json.remark record.remark ? record.remark : ""
       end
     end
   end
