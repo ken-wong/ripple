@@ -3,7 +3,10 @@
   <%= f.input :date, html5: true, label: false, input_html: {value: @day} %>
   <%= f.button :submit, '设置月份', class: "btn-danger" %>
 <% end %>
-<%= link_to 'output', admin_output_path(format: :xlsx) %>
+<%= simple_form_for @home, url: admin_output_path(format: :xlsx), method: :get do |f| %>
+  <%= f.input :date, html5: true, label: false, input_html: {value: @day} %>
+  <%= f.button :submit, 'output', class: "btn-danger" %>
+<% end %>
 <h1><%= @day.to_s(:month_and_year) %></h1>
 <table class="table table-bordered">
   <tr>
