@@ -8,6 +8,7 @@
         <%= Admin::WEEKDAYS[date.strftime("%w").to_i] %>
       </th>
     <% end %>
+    <th>汇总</th>
   </tr>
   <% User.where(id: @project.records.pluck(:user_id)).each do |user| %>
     <tr>
@@ -20,6 +21,20 @@
           <%= record.blank? ? nil : record.hour %>
         </td>
       <% end %>
+      <td>
+        <%= @project.records.where(user_id: user.id).sum(:hour) %>
+      </td>
     </tr>
   <% end %>
+  <tr>
+    <td><strong>汇总</strong></td>
+    <% @project.records.order(date: :asc).pluck(:date).uniq.each do |date| %>
+      <td class="text-center" style="background:<%= "#A8A8A8" if (date.strftime("%w").to_i == 0 || date.strftime("%w").to_i == 6) %>">
+        <%= @project.records.where(date: date).sum(:hour) %>
+      </td>
+    <% end %>
+    <td>
+      <%= @project.records.sum(:hour) %>
+    </td>
+  </tr>
 </table>
