@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
-lock '3.10.1'
+lock '~> 3.12.0'
 
 set :application, 'ripple'
-set :repo_url, 'git@github.com:ken-wong/ripple.git'
+set :repo_url, 'git@github.com:dreamlx/ripple.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
